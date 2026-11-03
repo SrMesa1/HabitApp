@@ -1,26 +1,44 @@
 import 'package:flutter/material.dart';
 
-/// Se muestra cuando todavía no hay hábitos registrados.
+/// Se muestra cuando no hay elementos para mostrar. Sin parámetros usa el
+/// texto de "sin hábitos"; el taller 2 lo reutiliza para "sin registros".
 class EstadoVacio extends StatelessWidget {
-  const EstadoVacio({super.key});
+  final IconData icono;
+  final String titulo;
+  final String mensaje;
+  final String? textoBoton;
+  final VoidCallback? alPresionar;
+
+  const EstadoVacio({
+    super.key,
+    this.icono = Icons.playlist_add_check,
+    this.titulo = 'Aún no tienes hábitos',
+    this.mensaje = 'Toca "Agregar hábito" para crear el primero.',
+    this.textoBoton,
+    this.alPresionar,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 32),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 32),
       child: Column(
         children: [
-          Icon(Icons.playlist_add_check, size: 64, color: Colors.grey),
-          SizedBox(height: 12),
+          Icon(icono, size: 64, color: Colors.grey),
+          const SizedBox(height: 12),
           Text(
-            'Aún no tienes hábitos',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+            titulo,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
           ),
-          SizedBox(height: 4),
-          Text(
-            'Toca "Agregar hábito" para crear el primero.',
-            textAlign: TextAlign.center,
-          ),
+          const SizedBox(height: 4),
+          Text(mensaje, textAlign: TextAlign.center),
+          if (textoBoton != null && alPresionar != null) ...[
+            const SizedBox(height: 16),
+            FilledButton.tonal(
+              onPressed: alPresionar,
+              child: Text(textoBoton!),
+            ),
+          ],
         ],
       ),
     );
