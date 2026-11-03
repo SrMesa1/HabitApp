@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'registro_Activivdad_screen.dart';
 import '../models/habit.dart';
 import '../services/habit_summary.dart';
 import '../services/storage_service.dart';
@@ -87,6 +87,17 @@ class _EstadoPantallaInicio extends State<PantallaInicio> {
     );
   }
 
+    /// Taller 2: abre el flujo de registro de actividad (datos en memoria).
+  void _abrirRegistroActividad() {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => PantallaRegistroActividad(
+          habitos: List<Habito>.unmodifiable(_habitos),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,6 +123,13 @@ class _EstadoPantallaInicio extends State<PantallaInicio> {
                       ResumenHabitos.contarPorCategoria(_habitos),
                 ),
                 const SizedBox(height: 8),
+                const SizedBox(height: 8),
+                FilledButton.tonalIcon(
+                  onPressed: _abrirRegistroActividad,
+                  icon: const Icon(Icons.edit_calendar),
+                  label: const Text('Registrar actividad'),
+                ),
+                   const SizedBox(height: 8),
                 if (_habitos.isEmpty)
                   const EstadoVacio()
                 else
